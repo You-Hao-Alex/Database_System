@@ -1,6 +1,7 @@
 package Read;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 
 public class dbload {
@@ -12,11 +13,21 @@ public class dbload {
 			while ((line = file.readLine()) != null) {
 				String item[] = line.split("/t");
 				last = item[item.length-1];
+				
+				
+				
+				
+				
+				
 				System.out.println(last);
 			}
 		}catch (Exception e) {
 			System.err.println("Sorry, file can't be read.");
 		}
-		// load the csv data into 'file'
+		// load the csv data into 'file'	
+		
+		
+		
+		
 	}
 }
