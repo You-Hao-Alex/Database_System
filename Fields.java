@@ -6,9 +6,17 @@ public class Fields {
     private String Content;
     private String Type;
 
-    public Fields(int Length, String Content, String Type) {
-        this.Length = Length;
+    public Fields(String Content, int a) {
         this.Content = Content;
+        if (a == 8) {
+			this.Type = "long";
+			this.Length = 8;
+		}
+		else {
+			this.Type = "String";
+			this.Length = Content.length();
+		}
+		
         this.Type = Type;
     }
 

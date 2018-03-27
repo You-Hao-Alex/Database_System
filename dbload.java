@@ -19,6 +19,7 @@ public class dbload {
 			ArrayList<Pages> pages = new ArrayList<Pages>(); // Use arraylist to save records
 			Pages page = new Pages(Integer.parseInt(args[1]));
 			boolean space = true;
+			file.readLine();
 			while ((line = file.readLine()) != null) {
 				
 				
@@ -33,13 +34,10 @@ public class dbload {
 				while (fieldIndex < 9){
 					
 					
-					field[fieldIndex] = new Fields(item[fieldIndex].length(),item[fieldIndex],"");
-					if (fieldIndex == 8) {
-						field[fieldIndex].setType("long");
-					}
-					else {
-						field[fieldIndex].setType("String");
-					}
+					field[fieldIndex] = new Fields(item[fieldIndex],fieldIndex);
+					
+					
+					
 					fieldIndex++;
 				
 				}
@@ -72,21 +70,28 @@ public class dbload {
 					
 				} // Use 'pages' to store all pages within required pagesize
 				
-				Readfile heap = new Readfile("heap.4096");
-				
-				for (int i=0; i<pages.size(); i++) {
-					heap.writeShort ((short)pages.get(i).getRecord().size());
-					int index = 2 + pages.get(i).getRecord().size() * 2; // The total length for this page
-					
-					for (int n=0; n<pages.get(i).getRecord().size(); n++) {
-						heap.writeInt (index); // The start index for the current record
-						index += pages.get(i).getRecord().get(n).getLength(); // The start index for next record
-						
-					}
-					
-					
-				}
 			
+			}
+			
+			Readfile heap = new Readfile("heap.4096");
+			
+			for (int i=0; i<pages.size(); i++) {
+				heap.writeShort ((short)pages.get(i).getRecord().size());
+				int index = 2 + pages.get(i).getRecord().size() * 2; // The total length for this page
+				
+				for (int n=0; n<pages.get(i).getRecord().size(); n++) {
+					heap.writeInt (index); // The start index for the current record
+					index += pages.get(i).getRecord().get(n).getLength(); // The start index for next record
+				}
+				
+				for (int n=0; n<pages.get(i).getRecord().size(); n++) {
+					for(int m=0;m<pages.get(i).getRecord().get(n).getRecord().length;m++) {
+					heap.write (pages.get(i).getRecord().get(n).getRecord()[m]); // Write BI for a field
+				}
+				}
+				
+				
+				
 			}
 		}catch (Exception e) {
 			e.getStackTrace();
