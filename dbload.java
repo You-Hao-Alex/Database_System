@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Date;
 
 import DBS.Fields;
 import DBS.Pages;
@@ -21,6 +22,10 @@ public class dbload {
 	public static void main(String[] args) {
 		int pagesize; // The input pagesize
 		String datafile; // The input filename
+		int recordNo = 0; // Count the number of records loaded
+		int pageNo = 0; // Count the number of pages used
+		Long createTime = null; // Count the number of milliseconds to create heap file
+
 		try {
 			if (args[0].equals("-p")) {
 				// To distinguish the input information
@@ -48,17 +53,23 @@ public class dbload {
 				}
 
 				Records record = new Records(field); // Create record to save lengths and fields (one tier)
+				recordNo++;
 				if ((page.getCurrent() + record.getLength() + 2) <= pagesize) {
 					// If capacity is enough, store this record in the current page
 					page.addRecord(record);
 				} else {
 					// Otherwise, Store it in a new page
+					/**
+					 * if (pages.size() == 5) // For testing 
+					 * break;
+					 **/
 					pages.add(page);
 					page = new Pages(pagesize);
+					pageNo++;
 					page.addRecord(record);
 				}
 			}
-
+			Date start = new Date(); // Mark the starting time
 			Writing heap = new Writing("heap." + pagesize); // To transfer into heap file
 			for (int i = 0; i < pages.size(); i++) {
 				heap.writeShort((short) pages.get(i).getRecord().size()); // Store the number of records for this page
@@ -86,9 +97,14 @@ public class dbload {
 				byte rest[] = new byte[restCapacity];
 				heap.writeBinary(rest); // Fill in " " to achieve page size
 			}
+			Date finish = new Date(); // Mark the ending time
+			createTime = finish.getTime() - start.getTime(); // Compare to get the running time
 		} catch (Exception e) {
 			System.err.println("Sorry, file can't be read.");
 		}
 		// load the CSV data into 'heap'
+		System.out.println("The number of records loaded is " + recordNo);
+		System.out.println("The number of pages used is " + pageNo);
+		System.out.println("The number of milliseconds to create the heap file is " + createTime);
 	}
 }
