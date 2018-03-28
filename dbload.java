@@ -14,13 +14,22 @@ public class dbload {
 	public static void main(String[] args) {
 		int currentPageSize = 0;
 		int addtionalPageSize = 0;
+		int pagesize;
+		String datafile;
 
 		try {
-			BufferedReader file = new BufferedReader(new FileReader(args[2]));
+			if (args[0].equals("-p")) {
+				pagesize = Integer.parseInt(args[1]);
+				datafile = args[2];
+			} else {
+				pagesize = Integer.parseInt(args[2]);
+				datafile = args[0];
+			}
+
+			BufferedReader file = new BufferedReader(new FileReader(datafile));
 			String line = null;
 			ArrayList<Pages> pages = new ArrayList<Pages>(); // Use arraylist to save records
-			Pages page = new Pages(Integer.parseInt(args[1]));
-			boolean space = true;
+			Pages page = new Pages(pagesize);
 			file.readLine();
 			while ((line = file.readLine()) != null) {
 				String item[] = line.split("\t"); // Use item to store all the information in the csv
@@ -36,21 +45,24 @@ public class dbload {
 
 				Records record = new Records(field); // Create record to save lengths and fields (one tier)
 
-				if ((page.getCurrent() + record.getLength() + 2) <= Integer.parseInt(args[1])) {
+				if ((page.getCurrent() + record.getLength() + 2) <= pagesize) {
 					page.addRecord(record);
-					
 				} else {
+
 					pages.add(page);
-					page = new Pages(Integer.parseInt(args[1]));
+					page = new Pages(pagesize);
 					page.addRecord(record);
 
 				} // Use 'pages' to store all pages within required pagesize
 
 			}
 
-			Readfile heap = new Readfile("heap.4096");
+			Readfile heap = new Readfile("heap." + pagesize);
 
 			for (int i = 0; i < pages.size(); i++) {
+				if (pages.get(i).getRecord().size() < 30)
+					System.out.println("");
+
 				heap.writeShort((short) pages.get(i).getRecord().size());
 				int index = 2 + pages.get(i).getRecord().size() * 2; // The total length for this page
 
@@ -60,7 +72,6 @@ public class dbload {
 				}
 
 				for (int n = 0; n < pages.get(i).getRecord().size(); n++) {
-
 					int indexRecord = 18;
 					heap.writeShort((short) indexRecord);
 					for (int l = 0; l < 8; l++) { // Write the record
@@ -71,19 +82,12 @@ public class dbload {
 					for (int m = 0; m < 9; m++) { // Write the field
 						heap.write(pages.get(i).getRecord().get(n).getRecord()[m]); // Write BI for a field
 					}
-
 				}
-				int restCapacity = (4096 - pages.get(i).getCurrent());
-
+				int restCapacity = (pagesize - pages.get(i).getCurrent());
 				if (restCapacity < 0)
 					System.out.println("");
-
 				byte rest[] = new byte[restCapacity];
-				for (int k = 0; k < restCapacity; k++) {
-					rest[k] = (byte) 0;
-				}
 				heap.writeBinary(rest);
-
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
