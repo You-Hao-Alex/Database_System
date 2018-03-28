@@ -23,7 +23,7 @@ public class Readfile {
 			writeBinary(field.getContent().getBytes("UTF-8")); // Write BI for a String
 		}
 		else {
-			os.writeLong(Long.valueOf(field.getContent()).longValue()); // Write BI for a Long
+			os.writeLong(Long.valueOf(field.getContent())); // Write BI for a Long
 		}
 		}
 		catch (Exception e){

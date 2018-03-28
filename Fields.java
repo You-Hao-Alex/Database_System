@@ -2,13 +2,13 @@ package DBS;
 
 public class Fields {
 	
-    private int Length;
-    private String Content;
-    private String Type;
+    private int Length; // Length of the field
+    private String Content; // Content of the field
+    private String Type; // Type of the field (String or int)
 
-    public Fields(String Content, int a) {
-        this.Content = Content;
-        if (a == 8) {
+    public Fields(String Content, int fieldNo) {
+        this.Content = Content; // Set the content of the field
+        if (fieldNo == 8) { // Set the type of the field
 			this.Type = "long";
 			this.Length = 8;
 		}
@@ -16,8 +16,6 @@ public class Fields {
 			this.Type = "String";
 			this.Length = Content.length();
 		}
-		
-        this.Type = Type;
     }
 
     public int getLength() {
@@ -44,5 +42,4 @@ public class Fields {
         this.Type = Type;
     }
 
-   
 }
