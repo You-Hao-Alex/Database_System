@@ -2,6 +2,13 @@ package DBS;
 
 import java.util.ArrayList;
 
+/**
+ * @Date 28/03/2018
+ * @author You Hao s3583715
+ * @Description: Pages class. For creating a page to store records
+ * @Version 1.0
+ */
+
 public class Pages {
 	private int max; // The capacity of this page
 	private int current = 2; // Current size of the page
@@ -13,7 +20,7 @@ public class Pages {
 	}
 
 	public int getCurrent() {
-		return current;
+		return current; // Get the current usage
 	}
 
 	public int getRest() {
@@ -26,7 +33,7 @@ public class Pages {
 	}
 
 	public ArrayList<Records> getRecord() {
-		return pages;
+		return pages; // Get the record list
 	}
 
 }
