@@ -59,10 +59,10 @@ public class dbload {
 					page.addRecord(record);
 				} else {
 					// Otherwise, Store it in a new page
-					/**
-					 * if (pages.size() == 5) // For testing 
-					 * break;
-					 **/
+					
+					 if (pages.size() == 2) // For testing 
+					 break;
+					 
 					pages.add(page);
 					page = new Pages(pagesize);
 					pageNo++;
@@ -82,10 +82,11 @@ public class dbload {
 				}
 
 				for (int n = 0; n < pages.get(i).getRecord().size(); n++) {
-					int indexRecord = 18; // 2*9 to store the index of 9 fields in a single record
+					int indexRecord = 20; // 2*9 to store the index of 9 fields in a single record
 					for (int l = 0; l < 9; l++) { // Write the field index
 						heap.writeShort((short) indexRecord); // Write the index for each field
-						indexRecord += pages.get(i).getRecord().get(l).getRecord().length;
+						// System.out.println(indexRecord);
+						indexRecord += pages.get(i).getRecord().get(n).getRecord()[l].getLength();
 					}
 					heap.writeShort((short) indexRecord); // Write an ending index
 
