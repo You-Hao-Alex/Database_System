@@ -19,7 +19,7 @@ public class Writing {
 		try {
 			os = new DataOutputStream(new FileOutputStream(Filename));
 		} catch (Exception e) {
-			System.err.println("Sorry, file can't be output1.");
+			System.err.println("Sorry, can't find the input.");
 		}
 	}
 
@@ -32,7 +32,7 @@ public class Writing {
 				os.writeLong(Long.valueOf(field.getContent())); // Write BI for a Long
 			}
 		} catch (Exception e) {
-			System.err.println("Sorry, file can't be output2.");
+			System.err.println("Sorry, can't convert this field.");
 		}
 	}
 
@@ -40,7 +40,7 @@ public class Writing {
 		try {
 			os.writeInt(outInt); // Write BI for a Int
 		} catch (Exception e) {
-			System.err.println("Sorry, file can't be output3.");
+			System.err.println("Sorry, can't convert this int.");
 		}
 	}
 
@@ -48,7 +48,7 @@ public class Writing {
 		try {
 			os.writeShort(outShort); // Write BI for a Short
 		} catch (Exception e) {
-			System.err.println("Sorry, file can't be output4.");
+			System.err.println("Sorry, can't convert this Short.");
 		}
 	}
 
@@ -56,7 +56,7 @@ public class Writing {
 		try {
 			os.write(bytes); // Write BI for a Short
 		} catch (Exception e) {
-			System.err.println("Sorry, file can't be output5.");
+			System.err.println("Sorry, can't convert this byte.");
 		}
 	}
 
