@@ -1,9 +1,6 @@
-package Read;
 
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
-
-import DBS.Fields;
 
 /**
  * @Date 28/03/2018
