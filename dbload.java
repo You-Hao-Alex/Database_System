@@ -59,10 +59,10 @@ public class dbload {
 					page.addRecord(record);
 				} else {
 					// Otherwise, Store it in a new page
-					
-					 if (pages.size() == 2) // For testing 
-					 break;
-					 
+					/**
+					 * if (pages.size() == 2) // For testing 
+					 * break;
+					 **/
 					pages.add(page);
 					page = new Pages(pagesize);
 					pageNo++;
