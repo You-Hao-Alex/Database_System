@@ -1,5 +1,4 @@
 
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
@@ -14,11 +13,25 @@ import java.util.Date;
 
 public class dbquery {
 	public static void main(String[] args) {
+		int pagesize = 0; // Store the page size
+		String text = null; // Store the target text
+		boolean arg = false;
+		try {
+			pagesize = Integer.parseInt(args[1]); // Get the pagesize
+			text = args[0]; // Get the text query
+		} catch (Exception e) {
+			arg = true;
+		}
+		if (true) {
+			try {
+				pagesize = Integer.parseInt(args[0]); // Get the pagesize
+				text = (args[1]); // Get the text query
+			} catch (Exception e) {
+			}
+		}
 		try {
 			Date start = new Date(); // Mark the starting time
-			String text = args[0]; // Get the text query
-			int pagesize = Integer.parseInt(args[1]); // Get the pagesize
-			String datafile = "heap." + args[1]; // Get the file name
+			String datafile = "heap." + pagesize; // Get the file name
 			dbquery input = new dbquery();
 			input.search(text, pagesize, datafile); // Do the operations
 			Date finish = new Date(); // Mark the ending time
