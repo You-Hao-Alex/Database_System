@@ -9,7 +9,7 @@ import java.util.Hashtable;
 public class hashload {
 	public static void main(String[] args) {
 		int pagesize = 0; // Store the page size
-		int inputarray = 1; // The input array position of pagesize
+		int inputarray = 0; // The input array position of pagesize
 
 		try {
 
@@ -83,7 +83,7 @@ public class hashload {
 					String BNname = new String(BN); // Get the BN name
 					// System.out.println(BNname+pageno);
 
-					int hashcode = (Math.abs(BNname.hashCode())) % hashtablesize;
+					int hashcode = HashFunctions.gethashcode(BNname, hashtablesize);
 					// System.out.println(hashcode);
 					hashdata.add("" + hashcode);
 					hashdata.add(BNname);
@@ -96,7 +96,9 @@ public class hashload {
 				//	break;
 
 			}
-			int no = 0; // Mark the number of records in the hash table
+			//int noi = 0; // Mark the number of records in the hash table
+			//int noii =0;
+			//int no = 0;
 			int content =3; // The number of array 
 			Hashtable<String, String> table = new Hashtable<String, String>(); // Hash to store the (text, page number)
 			ArrayList tables = new ArrayList(); // Create tables in array list to store content of table
@@ -108,11 +110,8 @@ public class hashload {
 				for (int j = 0; j < (hashdata.size() / content); j++) {
 					// Save in current bucket
 					if (((Hashtable<String, String>) tables.get(Integer.parseInt(hashdata.get(content * j)))).size()<bucketsize) {
-						Hashtable<String, String> a = new Hashtable <String, String>();
-						a = (Hashtable<String, String>) tables.get(Integer.parseInt(hashdata.get(content * j)));
-						// System.out.println(a.size());
-					a.put(hashdata.get(content * j + 1), hashdata.get(content * j+2));
-					no++;
+						((Hashtable<String, String>) tables.get(Integer.parseInt(hashdata.get(content * j)))).put(hashdata.get(content * j + 1), hashdata.get(content * j+2));
+						// noi++;
 					}
 					// Overflow to next bucket
 					else { 
@@ -126,17 +125,10 @@ public class hashload {
 							}
 						}while (((Hashtable<String, String>) tables.get(number)).size()==bucketsize);
 						((Hashtable<String, String>) tables.get(number)).put(hashdata.get(content * j + 1), hashdata.get(content * j+2));
-						no++;
+						//noii++;
 						}
 				}
-				/**
 			
-			for (int j = 0; j < (hashdata.size() / content); j++) {
-				// Save in current bucket
-				((Hashtable<String, String>) tables.get(Integer.parseInt(hashdata.get(content * j)))).put(hashdata.get(content * j + 1), hashdata.get(content * j+2));
-				no++;
-				}
-			 **/
 				
 					
 					for (int i =0;i<hashtablesize;i++) {
@@ -144,15 +136,16 @@ public class hashload {
 						FileOutputStream hash = new FileOutputStream(hashfile);
 						ObjectOutputStream hashout = new ObjectOutputStream(hash); // Write into Hash file
 						hashout.writeObject((Hashtable<String, String>)tables.get(i));
-						Hashtable<String, String> a = new Hashtable <String, String>();
-						a = (Hashtable<String, String>) tables.get(i);
-						System.out.println(a.size());
+						//Hashtable<String, String> a = (Hashtable<String, String>) tables.get(i);
+						//no += a.size();
+						//System.out.println(((Hashtable<String, String>)tables.get(i)).get("Best Massage Australia"));
+						
 						hashout.flush();
 						hashout.close();	
 					}
 					
 					
-			System.out.println(no);
+			//System.out.println(noi+" "+noii+" "+no);
 
 		} catch (Exception e) {
 			// System.err.println("Incorrect input");
