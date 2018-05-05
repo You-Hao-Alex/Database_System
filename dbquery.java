@@ -52,8 +52,8 @@ public class dbquery {
 			// Read from heap file and get the first page into page array
 			while ((heap.read(page, pageNo, pagesize)) != -1) {
 				ArrayList<String[]> Result = Searching.getRecord(text, page);
-				if (Result.size() == 0)
-					System.out.println("No matching results in current page");
+				//if (Result.size() == 0)
+				//	System.out.println("No matching results in current page");
 			}
 		} catch (Exception e) {
 			System.err.println("Incorrect input");

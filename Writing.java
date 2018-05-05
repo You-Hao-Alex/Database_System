@@ -51,7 +51,7 @@ public class Writing {
 
 	public void writeBinary(byte[] bytes) {
 		try {
-			os.write(bytes); // Write BI for a Short
+			os.write(bytes); // Write BI for a byte
 		} catch (Exception e) {
 			System.err.println("Sorry, can't convert this byte.");
 		}

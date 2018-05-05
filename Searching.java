@@ -1,13 +1,12 @@
-
-
 import java.util.ArrayList;
 
 /**
  * @Date 31/03/2018
  * @author You Hao s3583715
- * @Description: Searching class. Most functions are operated in this class. Also converting functions
+ * @Description: Searching class. Most functions are operated in this class.
+ *               Also converting functions
  * @Version 1.0
- */
+ **/
 
 public class Searching {
 	public static ArrayList<String[]> getRecord(String text, byte[] page) {
@@ -35,7 +34,7 @@ public class Searching {
 	}
 
 	// Get the result and store them in an array list
-	private static ArrayList<String[]> getResult(byte[] page, int[] position, int[] length,
+	public static ArrayList<String[]> getResult(byte[] page, int[] position, int[] length,
 			ArrayList<Integer> resultIndex) {
 		ArrayList<String[]> getResult = new ArrayList<String[]>();
 		String[] a = new String[2]; // To store the items in each field
@@ -58,7 +57,7 @@ public class Searching {
 	}
 
 	// Get the position of targeting records
-	private static ArrayList<Integer> getField(byte[] page, int[] position, int[] length, String text) {
+	public static ArrayList<Integer> getField(byte[] page, int[] position, int[] length, String text) {
 		ArrayList<Integer> Target = new ArrayList<Integer>();
 		for (int i = 0; i < position.length; i++) {
 			int[] fieldPosition = new int[10]; // Store field position
