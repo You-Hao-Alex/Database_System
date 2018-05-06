@@ -2,12 +2,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 /**
  * @Date 04/05/2018
  * @author You Hao s3583715
- * @Description: HashFunctions class. Most hash functions are operated in this
+ * @Description: HashFunctions class. Most query functions are operated in this
  *               class. Including the function of generating hash code.
  * @Version 1.0
  **/
@@ -22,15 +21,16 @@ public class HashFunctions {
 
 	// This method is to find the page number of target text in the heap file
 	public static int getpageno(int hashcode, int pagesize, String text, int times, int fail, int hashtablesize) {
-		int overflow = 10; // Check for 10 more pages if there's an overflow
+		int overflow = 5; // Check for 10 more pages if there's an overflow
 		int pagenumber = 0; // To store the page number of key word in heap file
 		String hashfile = "hash4096/" + "hash" + hashcode + "." + pagesize; // The name of the target hash file
 		int lasttable = hashtablesize - 1; // The index of last table in hash table file
 		try {
 			FileInputStream hashtable = new FileInputStream(new File(hashfile));
 			ObjectInputStream hash = new ObjectInputStream(hashtable);
-			Hashtable<String, String> table = (Hashtable<String, String>) hash.readObject(); // Get the table
-			String pageno = table.get(text); // Get the page number in String
+			ArrayList<String[]> temptable = (ArrayList<String[]>) hash.readObject(); // Get the table
+			Hashtables table = new Hashtables(temptable);
+			String pageno = table.getPageno(text); // Get the page number in String
 
 			// If we didn't find the page number in current table
 			if (pageno == null) {
@@ -42,24 +42,28 @@ public class HashFunctions {
 						pagenumber = fail;
 					// Else, keep searching it in next page
 					else
+						System.out.println("There is no result in hash" + hashcode +".4096");
 						pagenumber = getpageno(0, pagesize, text, times, fail, hashtablesize);
 				} else {
 					hashcode++;
-					times++;
 					if (times == overflow)
 						pagenumber = fail;
 					else
+						System.out.println("There is no result in hash" + hashcode +".4096");
 						pagenumber = getpageno(hashcode, pagesize, text, times, fail, hashtablesize);
 				}
 			}
 			// If we find it, get the page number and close the hash
 			else {
 				pagenumber = Integer.parseInt(pageno); // Get the page number in Integer
+				System.out.println("We found the result in hash"+ hashcode + ".4096");
 				hash.close(); // Close the hash
 			}
 		} catch (Exception e) {
-			System.err.println("Can't find the hash file");
+			// System.err.println("Can't find the hash file");
+			e.printStackTrace();
 		}
+		
 		return pagenumber;
 	}
 
@@ -92,6 +96,7 @@ public class HashFunctions {
 		int fail = -1; // Return -1 to show no results
 		int hashcode = gethashcode(text, hashtablesize); // Get the hash code
 		int pageno = getpageno(hashcode, pagesize, text, times, fail, hashtablesize); // Get the page number
+	
 		// If no result matched, print the alert
 		if (pageno == fail)
 			System.err.println("Sorry, the result is not found.");

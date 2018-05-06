@@ -27,7 +27,8 @@ public class hashquery {
 			System.out.println("Time to generate hash in milliseconds is " + (finish.getTime() - start.getTime()));
 			// Compare to get the running time
 		} catch (Exception e) {
-			System.err.println("Error");
+			e.printStackTrace();
+			//System.err.println("Error");
 		}
 	}
 }
