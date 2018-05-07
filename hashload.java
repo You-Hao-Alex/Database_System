@@ -64,8 +64,8 @@ public class hashload {
 					} while ((tables.get(number)).size() == bucketsize);
 					(tables.get(number)).addtable(hashdata.get(content * j + bnnameposition),
 							hashdata.get(content * j + pagenumberposition));
-					System.out.println(hashdata.get(content * j + bnnameposition)+" "+
-							hashdata.get(content * j + pagenumberposition));
+					System.out.println(hashdata.get(content * j + bnnameposition) + " "
+							+ hashdata.get(content * j + pagenumberposition));
 					overflownumber++;
 				}
 			}

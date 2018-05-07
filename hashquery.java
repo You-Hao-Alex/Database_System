@@ -3,9 +3,10 @@ import java.util.Date;
 /**
  * @Date 04/05/2018
  * @author You Hao s3583715
- * @Description: hashquery class. The main class to implement the query function.
- *               It will get the page number of target text from hash tables,
- *               then use the page number to get whole record from heap file.
+ * @Description: hashquery class. The main class to implement the query
+ *               function. It will get the page number of target text from hash
+ *               tables, then use the page number to get whole record from heap
+ *               file.
  * @Version 1.0
  **/
 
@@ -15,7 +16,7 @@ public class hashquery {
 			int length = args.length; // Store the page size
 			int pagesizeindex = length - 1; // Store the position of page size
 			int pagesize = Integer.parseInt(args[pagesizeindex]); // Get the page size from input
-			int hashtablesize = 1023; // Set the hash table size
+			int hashtablesize = 1024 - 1; // Set the hash table size
 			String text = args[0]; // Store the target text
 			// Get all the content of text
 			for (int i = 1; i < pagesizeindex; i++) {
@@ -28,7 +29,7 @@ public class hashquery {
 			// Compare to get the running time
 		} catch (Exception e) {
 			e.printStackTrace();
-			//System.err.println("Error");
+			// System.err.println("Error");
 		}
 	}
 }
