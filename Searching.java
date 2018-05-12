@@ -83,9 +83,7 @@ public class Searching {
 
 	// Convert byte[] to short
 	public static short byteToShort(byte[] index) {
-		short result;
-		result = (short) (index[0] << 8 | index[1] & 0xff);
-		return result;
+		return (short) (index[0] << 8 | index[1] & 0xff);
 	}
 
 	// Convert byte[] to Long

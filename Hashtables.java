@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -7,41 +8,41 @@ import java.util.ArrayList;
  * @Version 1.0
  **/
 
-public class Hashtables {
+public class Hashtables implements Serializable {
 	int bnname = 0; // The position of BNname in the array
 	int pageno = 1; // The position of page number in the arrays
-	ArrayList<String[]> table = new ArrayList<String[]>(); // To store all the records
+	ArrayList<String> BNname = new ArrayList<String>(); // To store all the records
+	ArrayList<Integer> PageNo = new ArrayList<Integer>();
 
-	// Create a hash table
-	public Hashtables(ArrayList<String[]> table) {
-		this.table = table;
+	// Get the BNname list
+	public ArrayList<String> getBNnamelist() {
+		return BNname;
 	}
 
-	// Get the array list in this hash table
-	public ArrayList<String[]> getList() {
-		return table; // Get the current usage
+	// Get the page number list
+	public ArrayList<Integer> getPageNolist() {
+		return PageNo;
 	}
 
 	// Add a new record in this table
-	public void addtable(String BNname, String pagenumber) {
-		String[] next = new String[2];
-		next[bnname] = BNname;
-		next[pageno] = pagenumber;
-		table.add(next);
+	public void addtable(String BNname, int PageNo) {
+		this.BNname.add(BNname);
+		this.PageNo.add(PageNo);
 	}
 
 	// Get the size of this table
 	public int size() {
-		return table.size();
+		return BNname.size();
 	}
 
 	// Get the page number of this table
-	public String getPageno(String text) {
-		String returning = null;
-		for (int i = 0; i < table.size(); i++) {
-			if (table.get(i)[bnname].equals(text))
-				returning = table.get(i)[1];
+	public int getPageno(String text) {
+		int fail = -1;
+		for (int i = 0; i < BNname.size(); i++) {
+			
+			if (BNname.get(i).equals(text))
+				return PageNo.get(i);
 		}
-		return returning;
+		return fail;
 	}
 }

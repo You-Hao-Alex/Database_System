@@ -1,9 +1,7 @@
-package Read;
-
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 
-import DBS.Fields;
+
 
 public class Readfile {
 	DataOutputStream os;

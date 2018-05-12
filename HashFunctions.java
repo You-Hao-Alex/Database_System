@@ -16,6 +16,8 @@ public class HashFunctions {
 	public static int gethashcode(String hashcode, int hashtablesize) {
 		// Get the absolute value and then mod the hash table size
 		int hash = (Math.abs(hashcode.hashCode())) % hashtablesize;
+		if (hashcode.equals("Klean Co"))
+			System.out.println("HashFunctions " + hash);
 		return hash;
 	}
 
@@ -30,14 +32,14 @@ public class HashFunctions {
 		try {
 			FileInputStream hashtable = new FileInputStream(new File(hashfile));
 			ObjectInputStream hash = new ObjectInputStream(hashtable);
-			ArrayList<String[]> temptable = (ArrayList<String[]>) hash.readObject(); // Get the table
-			Hashtables table = new Hashtables(temptable);
-			String pageno = table.getPageno(text); // Get the page number in String
+			// ArrayList temptable = (ArrayList) hash.readObject(); // Get the table
+			Hashtables table = (Hashtables) hash.readObject();
+			int pageno = table.getPageno(text); // Get the page number in String
 			Boolean check = false; // Check if this bucket is full
-			if (table.getList().size() != bucketsize)
+			if (table.size() != bucketsize)
 				check = true;
 			// If we didn't find the page number in current table
-			if (pageno == null) {
+			if (pageno == fail) {
 				// If this is the last hash table
 				if (hashcode == lasttable) {
 					// If it checked many times for the overflow, return fail to show 'no results'
@@ -61,10 +63,10 @@ public class HashFunctions {
 			// If we find it, get the page number and close the hash
 			else {
 				if (check) {
-					pagenumber.add(Integer.parseInt(pageno)); // Get the page number in Integer
+					pagenumber.add(pageno); // Get the page number in Integer
 					System.out.println("We found the result in hash" + hashcode + ".4096");
 				} else {
-					pagenumber.add(Integer.parseInt(pageno)); // Get the page number in Integer
+					pagenumber.add(pageno); // Get the page number in Integer
 					System.out.println("We found the result in hash" + hashcode + ".4096");
 					hashcode++;
 					pagenumber = getpageno(hashcode, pagesize, text, fail, hashtablesize, pagenumber);
