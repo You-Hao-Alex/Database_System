@@ -93,7 +93,7 @@ public class HashLoadFunctions {
 
 				BN = new byte[getfield(nextindex + nextindex, page, positiona, i)
 						- getfield(nextindex, page, positiona, i)];
-				
+
 				// Find the info in the second field
 				System.arraycopy(page, positiona + getfield(nextindex, page, positiona, i), BN, 0,
 						getfield(nextindex + nextindex, page, positiona, i) - getfield(nextindex, page, positiona, i));
@@ -104,13 +104,14 @@ public class HashLoadFunctions {
 		return hashdata;
 	}
 
+	// To add a new record in hash data
 	private static void addhash(ArrayList<Hashcode> hashdata, String BNname, int pageno) {
 		hashdata.add(new Hashcode(BNname, pageno));
 	}
 
+	// To get the field position
 	private static int getfield(int nextindex, byte[] page, int position, int i) {
 		System.arraycopy(page, (position + savebyte * nextindex), index, 0, savebyte);
 		return Searching.byteToShort(index);
 	}
-
 }

@@ -36,5 +36,4 @@ public class Hashcode {
 	public int getPN() {
 		return PN; // Get the current usage
 	}
-
 }

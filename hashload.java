@@ -79,6 +79,5 @@ public class hashload {
 			System.err.println("Incorrect input");
 			// e.printStackTrace();
 		}
-
 	}
 }

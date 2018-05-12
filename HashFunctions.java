@@ -16,8 +16,6 @@ public class HashFunctions {
 	public static int gethashcode(String hashcode, int hashtablesize) {
 		// Get the absolute value and then mod the hash table size
 		int hash = (Math.abs(hashcode.hashCode())) % hashtablesize;
-		if (hashcode.equals("Klean Co"))
-			System.out.println("yesyesyes"+hash);
 		return hash;
 	}
 
@@ -98,7 +96,6 @@ public class HashFunctions {
 			heap.close(); // Close the heap
 		} catch (Exception e) {
 			System.err.println("Can't find the heap file!");
-			// e.printStackTrace();
 		}
 	}
 
@@ -107,8 +104,7 @@ public class HashFunctions {
 		int fail = -1; // Return -1 to show no results
 		int hashcode = gethashcode(text, hashtablesize); // Get the hash code
 		ArrayList<Integer> pagenumber = new ArrayList<Integer>();
-		ArrayList<Integer> pageno = getpageno(hashcode, pagesize, text, fail, hashtablesize, pagenumber); // Get page
-																											// numbers
+		ArrayList<Integer> pageno = getpageno(hashcode, pagesize, text, fail, hashtablesize, pagenumber);
 		// If no result matched, print the alert
 		if (pageno.get(0) == fail)
 			System.err.println("Sorry, the result is not found.");
