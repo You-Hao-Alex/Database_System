@@ -17,7 +17,7 @@ public class HashFunctions {
 		// Get the absolute value and then mod the hash table size
 		int hash = (Math.abs(hashcode.hashCode())) % hashtablesize;
 		if (hashcode.equals("Klean Co"))
-			System.out.println("HashFunctions " + hash);
+			System.out.println("yesyesyes"+hash);
 		return hash;
 	}
 

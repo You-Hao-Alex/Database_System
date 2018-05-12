@@ -39,7 +39,6 @@ public class Hashtables implements Serializable {
 	public int getPageno(String text) {
 		int fail = -1;
 		for (int i = 0; i < BNname.size(); i++) {
-			
 			if (BNname.get(i).equals(text))
 				return PageNo.get(i);
 		}
