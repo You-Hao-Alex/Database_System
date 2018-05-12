@@ -77,29 +77,15 @@ public class HashLoadFunctions {
 		int recordno = Searching.byteToShort(index); // Convert into short and save it as an integer
 		int positiona = 0; // The index of position
 		for (int i = 0; i < recordno; i++) {
-			if (i < (recordno - nextindex)) {
-				System.arraycopy(page, savebyte * (i + nextindex), index, 0, savebyte);
-				positiona = Searching.byteToShort(index);
-				BN = new byte[getfield(nextindex + nextindex, page, positiona, i)
-						- getfield(nextindex, page, positiona, i)]; // Find the info in the second
-																	// field
-				System.arraycopy(page, positiona + getfield(nextindex, page, positiona, i), BN, 0,
-						getfield(nextindex + nextindex, page, positiona, i) - getfield(nextindex, page, positiona, i));
-
-				addhash(hashdata, new String(BN), pageno);
-			} else {
-				System.arraycopy(page, savebyte * (i + nextindex), index, 0, savebyte);
-				positiona = Searching.byteToShort(index);
-
-				BN = new byte[getfield(nextindex + nextindex, page, positiona, i)
-						- getfield(nextindex, page, positiona, i)];
-
-				// Find the info in the second field
-				System.arraycopy(page, positiona + getfield(nextindex, page, positiona, i), BN, 0,
-						getfield(nextindex + nextindex, page, positiona, i) - getfield(nextindex, page, positiona, i));
-				// System.out.println(new String(BN));
-				addhash(hashdata, new String(BN), pageno);
-			}
+			System.arraycopy(page, savebyte * (i + nextindex), index, 0, savebyte);
+			positiona = Searching.byteToShort(index);
+			BN = new byte[getfield(nextindex + nextindex, page, positiona, i)
+					- getfield(nextindex, page, positiona, i)];
+			// Find the info in the second field
+			System.arraycopy(page, positiona + getfield(nextindex, page, positiona, i), BN, 0,
+					getfield(nextindex + nextindex, page, positiona, i) - getfield(nextindex, page, positiona, i));
+			// System.out.println(new String(BN));
+			addhash(hashdata, new String(BN), pageno);
 		}
 		return hashdata;
 	}
